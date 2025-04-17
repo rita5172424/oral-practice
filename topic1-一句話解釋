@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一句話解釋｜口語表達訓練器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: #f1f7f3;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .example {
+      background: #e0f7e9;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #randomQuestion {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .record {
+      margin-top: 2rem;
+    }
+    textarea {
+      width: 100%;
+      height: 60px;
+      margin-top: 0.5rem;
+    }
+    .cloud {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    .back-link {
+      margin-top: 2rem;
+      display: inline-block;
+      text-decoration: none;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>一句話解釋</h1>
+    <div class="description">
+      📌嘗試用一句話來解釋一個抽象的概念，訓練你抓住重點與組織語句的能力。
+    </div>
+    <div class="example">
+      範例：<br>
+      愛是一種深沉的情感，包含著關懷、連結與為他人福祉著想的意願。
+    </div>
+    <button onclick="generateQuestion()">🎲 隨機題目</button>
+    <div id="randomQuestion"></div>
+
+    <div class="record">
+      <label>你的發想：</label>
+      <textarea id="userInput"></textarea>
+      <button onclick="saveIdea()">💾 儲存</button>
+      <div class="cloud" id="ideaCloud"></div>
+    </div>
+
+    <a class="back-link" href="index.html">← 回首頁</a>
+  </div>
+
+  <script>
+    const questions = [
+      "友情是……", "壓力是……", "自由是……", "快樂是……", "時間是……",
+      "希望是……", "失敗是……", "夢想是……", "責任是……", "勇氣是……"
+     "成功是……", "害怕是……", "快樂是……", "悲傷是……", "青春是……",
+        "信任是……", "挫折是……", "家庭是……", "回憶是……", "冒險是……",
+        "等待是……", "習慣是……", "改變是……", "夢想是……", "學習是……",
+        "分享是……", "誠實是……", "原諒是……", "嫉妒是……", "勇氣是……",
+        "寂寞是……", "愛情是……", "未來是……", "愛是……", "憤怒是……",
+        "期待是……", "自信是……", "時間是……", "正義是……", "文化是……",
+        "權力是……", "壓迫是……", "威脅是……","幸福是……", "美麗是……",
+        "滿足是……", "友善是……", "安心是……","習慣是……", "放棄是……",
+        "堅持是……", "家人是……", "寵愛是……","永恆是……", "和平是……",
+        "智慧是……", "想像是……", "進步是……",
+    ];
+
+    const userIdeas = JSON.parse(localStorage.getItem("explainIdeas") || "[]");
+
+    function generateQuestion() {
+      const q = questions[Math.floor(Math.random() * questions.length)];
+      document.getElementById("randomQuestion").textContent = q;
+    }
+
+    function saveIdea() {
+      const input = document.getElementById("userInput").value.trim();
+      if (input) {
+        userIdeas.push(input);
+        localStorage.setItem("explainIdeas", JSON.stringify(userIdeas));
+        document.getElementById("userInput").value = "";
+        renderCloud();
+      }
+    }
+
+    function renderCloud() {
+      const cloud = document.getElementById("ideaCloud");
+      cloud.innerHTML = userIdeas.map(idea => `🌿 ${idea}`).join("<br>");
+    }
+
+    renderCloud();
+  </script>
+</body>
+</html>
