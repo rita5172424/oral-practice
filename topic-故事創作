@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>故事創作</title>
+  <title>三句話講故事</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <script src="stars.js"></script>
   <style>
     body {
       font-family: 'Noto Sans TC', sans-serif;
@@ -61,13 +62,21 @@
 <body>
   <div class="container">
     <h1>三句話講故事</h1>
-    <p>📌練習用三句話說出一個有趣的故事，同時還要讓故事傳達一個抽象的主題或情感，例如「友情」、「恐懼」、「希望」等。</p>
+    <p>練習用三句話說出一個有趣的故事，同時還要讓故事傳達一個抽象的主題或情感，例如「友情」、「恐懼」、「希望」等。</p>
+
     <div class="section-title">範例</div>
-    <div class="example">有一天我撿到一隻機器人。牠什麼都不說，只默默幫我解決生活的困難。直到某天牠突然消失，我才發現那是我自己過去的投影。<br><strong>主題：成長</strong></div>
+    <div class="example">
+      有一天我撿到一隻機器人。牠什麼都不說，只默默幫我解決生活的困難。直到某天牠突然消失，我才發現那是我自己過去的投影。
+      <br><strong>主題：成長</strong>
+    </div>
 
     <button class="button" onclick="generateStory()">🎲 產生隨機故事題目＋主題</button>
-
     <div class="output" id="output"></div>
+
+    <div style="margin-top:2rem;">
+      <div id="stars-container"></div>
+      <button class="button" onclick="addStar()">✅ 完成練習，集一點</button>
+    </div>
 
     <a class="back-link" href="index.html">← 回首頁</a>
   </div>
@@ -102,6 +111,9 @@
       const theme = abstractThemes[Math.floor(Math.random() * abstractThemes.length)];
       document.getElementById("output").innerHTML = `<strong>故事開頭：</strong> ${story}<br><strong>主題概念：</strong> ${theme}`;
     }
+
+    // 初始化星星狀態
+    renderStars();
   </script>
 </body>
 </html>
