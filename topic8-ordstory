@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>隨機詞語串聯故事</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #eef3f7;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .example {
+      font-style: italic;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    .button {
+      margin: 1rem 0.5rem 0 0;
+      padding: 0.75rem 1.5rem;
+      background-color: #3b82f6;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 1rem;
+      background-color: #f0f4ff;
+      padding: 1rem;
+      border-radius: 10px;
+      border-left: 4px solid #3b82f6;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    .stars {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      color: #f59e0b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>隨機詞語串聯故事</h1>
+    <p>你會抽到三個看似無關的詞語，試著用它們串聯成一個有情節的小故事，越奇妙越好！</p>
+
+    <div class="section-title">範例</div>
+    <div class="example">
+      <strong>詞語：</strong> 鯊魚、便利商店、火星<br/>
+      <strong>故事：</strong> 一隻會說話的鯊魚來到便利商店打工，牠的目標是存錢搭火箭回火星……
+    </div>
+
+    <button class="button" onclick="generateWords()">🎲 產生三個隨機詞語</button>
+    <button class="button" onclick="addStar()">✨ 我完成練習了！集一顆星</button>
+    <div class="output" id="output"></div>
+    <div class="stars" id="starDisplay">🌟 已獲得星星：0 顆</div>
+
+    <a class="back-link" href="index.html">← 回首頁</a>
+  </div>
+
+  <script>
+    const words = [
+      // 生活常見物品 20
+      "牙刷", "手機", "書包", "鉛筆", "眼鏡", "便當盒", "遙控器", "拖鞋", "外套", "洗衣機",
+      "水壺", "雨傘", "鬧鐘", "筷子", "電風扇", "電腦", "冷氣", "窗簾", "椅子", "馬克杯",
+      // 生活稀有物品 15
+      "顯微鏡", "潛水裝", "望遠鏡", "打字機", "唱片機", "指紋辨識器", "迷你飛機", "雙眼望遠鏡", "投影機", "蒸氣熨斗",
+      "釘書機", "燈塔模型", "電擊棒", "擴音器", "跑步機",
+      // 各大領域專有名詞 (常見普羅大眾可知的) 20
+      "恐龍", "太空人", "火箭", "細胞", "火山", "鯊魚", "程式碼", "心臟", "病毒", "金字塔",
+      "鋼琴", "太陽系", "黑洞", "電磁波", "經濟學", "地震", "劇場", "投票", "法律", "AI人工智慧",
+      // 其他多元詞彙 35
+      "秘密", "夢境", "未來", "時間機器", "狼人", "吸血鬼", "公主", "機器人", "小丑", "忍者",
+      "外星人", "獨角獸", "火車站", "便利商店", "網路", "迷宮", "沙漠", "冰山", "彩虹", "天空",
+      "星星", "城堡", "樂園", "海底", "漫畫", "懸崖", "懷舊", "音樂", "夢想", "節奏",
+      "密碼", "影子", "反射", "意念", "謊言"
+    ];
+
+    function generateWords() {
+      const shuffled = words.sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 3);
+      document.getElementById("output").innerHTML = `<strong>詞語：</strong> ${selected.join("、")}`;
+    }
+  </script>
+
+  <script src="stars.js"></script>
+</body>
+</html>
