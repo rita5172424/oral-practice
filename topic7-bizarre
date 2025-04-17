@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>奇異類比聯想</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f9f7f2;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .example {
+      font-style: italic;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    .button {
+      margin: 1rem 0;
+      padding: 0.75rem 1.5rem;
+      background-color: #ff7043;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 1rem;
+      background-color: #fff8e1;
+      padding: 1rem;
+      border-radius: 10px;
+      border-left: 4px solid #ff7043;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #ff7043;
+      text-decoration: none;
+    }
+    .stars {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      color: #f4b400;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>奇異類比聯想</h1>
+    <p>這是一種創意聯想練習，請用一句話，把抽象的概念比喻成某個具體的東西。例如：「希望就像鬧鐘，一直響卻一直按掉」。越奇怪、越有畫面越好！</p>
+
+    <div class="section-title">範例</div>
+    <div class="example">
+      <strong>題目：</strong>勇氣像......<br/>
+      <strong>聯想：</strong>勇氣像快遞按鈴，你不知道會不會有人開門，但你還是按了。
+    </div>
+
+    <button class="button" onclick="generatePrompt()">🎲 隨機產生題目</button>
+    <div class="output" id="output"></div>
+
+    <button class="button" onclick="addStar()">✨ 我完成練習了！集一顆星</button>
+    <div class="stars" id="starDisplay">🌟 已獲得星星：0 顆</div>
+
+    <a class="back-link" href="index.html">← 回首頁</a>
+  </div>
+
+  <script>
+    const abstractConcepts = [
+      "友情", "勇氣", "信任", "誠實", "希望", "害怕", "壓力", "自由", "責任", "創意",
+      "夢想", "時間", "後悔", "思念", "快樂", "孤單", "自信", "生氣", "愛", "嫉妒",
+      "選擇", "懷疑", "期待", "幸福", "擔心", "冷靜", "改變", "挫折", "同理", "尊重",
+      "愛情", "自由", "希望", "夢想", "信念", "忠誠", "榮譽", "正義", "智慧", "幸福",
+      "平和", "熱情", "決心", "尊嚴", "慈悲", "寬容", "真誠", "冒險", "創造", "靈感",
+      "團結", "感恩", "堅韌", "謙遜", "慷慨", "純真", "毅力", "責任", "理解", "包容",
+      "喜悅", "奉獻", "和諧", "理想", "勇毅", "溫暖", "信念", "堅定", "柔情", "真理",
+      "榮耀", "抱負", "憐憫", "活力", "赤誠", "寧靜", "熱忱", "虔誠", "仁愛", "無私"
+    ];
+
+    const concreteThings = [
+      "泡麵", "牙刷", "拖鞋", "鬧鐘", "電風扇", "電梯", "自動販賣機", "紙飛機", "泡泡", "衛生紙", "齒輪", "時鐘", "計時器",
+      "馬桶", "冰箱", "螢幕保護程式", "外送員", "網路卡住的影片", "雨傘", "地鐵", "早餐三明治", "便利商店", "耳機", "口香糖",
+      "鞋子", "書包", "手電筒", "洗衣機", "保溫瓶", "膠水", "橡皮擦", "鬆餅機", "雨天的車窗", "行李箱", "馬拉松", "賽馬", 
+     "畫家", "醫生", "水彩", "鋼琴", "登山", "教師", "小說", "AI", "工程師", "保健食品", "柳橙汁", "膠帶", "登山", "蠟燭",
+     "足球", "歌手", "律師", "鴨舌帽", "吉他", "烹飪", "科學家", "詩歌", "環保議題", "建築師", "豪宅", "小籠包", "中藥",
+     "衣架", "演員", "記者", "搞笑藝人", "攝影", "旅行", "紙鶴", "電影", "玻璃瓶", "塑膠袋", "麥克風", "香蕉", "辣椒醬",
+     "瑜伽", "導演", "消防員","酸黃瓜", "繪畫", "衝浪", "作家", "劇本", "上海", "飛行員", "拐杖", "竹筒飯", "鹹酥雞",
+    "園藝", "音樂家", "警察", "電視", "雕塑", "滑雪", "編輯", "漫畫", "葉脈", "詐騙集團", "手工藝", "裁縫機", "手搖飲",
+    "自行車", "乳液", "農夫", "臭豆腐", "陶藝", "跳傘", "顧問", "廣播", "馬鈴薯", "鑽石", "墨鏡", "牛仔褲", "蝴蝶結", "水溝蓋"
+    ];
+
+    function generatePrompt() {
+      const concept = abstractConcepts[Math.floor(Math.random() * abstractConcepts.length)];
+      const object = concreteThings[Math.floor(Math.random() * concreteThings.length)];
+      document.getElementById("output").innerHTML = `<strong>題目：</strong> ${concept}像${object}`;
+    }
+  </script>
+
+  <script src="stars.js"></script>
+</body>
+</html>
