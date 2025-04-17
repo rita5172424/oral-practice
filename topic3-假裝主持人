@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>假裝主持人</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f3f8f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .example {
+      font-style: italic;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    .button {
+      margin: 1rem 0;
+      padding: 0.75rem 1.5rem;
+      background-color: #ff9800;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 1rem;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 10px;
+      border-left: 4px solid #ff9800;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #ff9800;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>假裝主持人</h1>
+    <p>假設你是一位活動主持人，請立刻展開介紹、炒熱氣氛或開場白。不用太認真，重點是自然、生動、有趣！</p>
+    
+    <div class="section-title">範例</div>
+    <div class="example">「各位觀眾朋友大家好！歡迎收看全台最會吃早午餐比賽，我是主持人小麥！今天參賽者要在 10 分鐘內做出最浮誇的酪梨吐司！」</div>
+
+    <button class="button" onclick="generatePrompt()">🎤 產生隨機主持場景</button>
+
+    <div class="output" id="output"></div>
+
+    <a class="back-link" href="index.html">← 回首頁</a>
+  </div>
+
+  <script>
+    const hostPrompts = [
+      "假裝你在主持一場貓咪選美比賽",
+      "你在主持一場外星人與地球人交朋友大會",
+      "你是深夜美食節目的主持人",
+      "你正在介紹一場透明雨傘設計比賽",
+      "你在主持全校最爆笑笑話比賽",
+      "你是動物園園區導覽員，要介紹長頸鹿",
+      "你主持的是植物會說話記者會",
+      "你在為魔法學校的開學典禮主持",
+      "你是火星旅遊節目的主持人",
+      "你要主持一場「誰的襪子最香」比賽",
+      "你正在主持一場「各行各業制服時裝秀」",
+      "你是「被貓奴支配的一天」節目主持人",
+      "你在主持一場自創樂器表演賽",
+      "你在主持紙飛機奧運大賽",
+      "你要主持全校最會模仿動物聲比賽",
+      "你是時間旅行博覽會的主持人",
+      "你要主持一場「三秒說出三件事」大賽",
+      "你正在介紹全台最新發明展",
+      "你是電影院預告片頻道的主持人",
+      "你在主持一場微型昆蟲選美比賽",
+      "你是「反向辯論」的主持人（支持不合理立場）",
+      "你在介紹「今天早上最怪的夢」記者會",
+      "你是玩具大改造節目的主持人",
+      "你要主持一場「語速最快大賽」",
+      "你正在為寵物天后音樂演唱會主持開場",
+      "你是「早餐界發明王」主持人",
+      "你要主持一場「假裝你是...」大賽",
+      "你在主持會說話冰箱的新品發表會",
+      "你是夢境解密秀的主持人",
+      "你正在介紹「假裝外星人」挑戰大賽"
+    ];
+
+    function generatePrompt() {
+      const prompt = hostPrompts[Math.floor(Math.random() * hostPrompts.length)];
+      document.getElementById("output").innerHTML = `<strong>主持場景：</strong> ${prompt}`;
+    }
+  <script src="stars.js"></script>
+</body>
+</html>
