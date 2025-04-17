@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>故事創作</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f1f7f3;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .example {
+      font-style: italic;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    .button {
+      margin: 1rem 0;
+      padding: 0.75rem 1.5rem;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 1rem;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 10px;
+      border-left: 4px solid #4CAF50;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #4CAF50;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>三句話講故事</h1>
+    <p>📌練習用三句話說出一個有趣的故事，同時還要讓故事傳達一個抽象的主題或情感，例如「友情」、「恐懼」、「希望」等。</p>
+    <div class="section-title">範例</div>
+    <div class="example">有一天我撿到一隻機器人。牠什麼都不說，只默默幫我解決生活的困難。直到某天牠突然消失，我才發現那是我自己過去的投影。<br><strong>主題：成長</strong></div>
+
+    <button class="button" onclick="generateStory()">🎲 產生隨機故事題目＋主題</button>
+
+    <div class="output" id="output"></div>
+
+    <a class="back-link" href="index.html">← 回首頁</a>
+  </div>
+
+  <script>
+    const storyPrompts = [
+      "有一天我遺失了一把鑰匙……", "月亮說它不想上班了……", "我夢見自己變成了一棵樹……",
+      "在圖書館裡突然聽見一聲龍吼……", "一隻貓邀請我參加牠的生日派對……",
+      "昨天早上我和一片雲吵架了……", "我的影子今天不想跟著我……",
+      "時鐘突然開始倒著走……", "書包裡竟然出現了一隻青蛙……",
+      "我發現自己能聽懂螞蟻說話……", "今天上課的老師是外星人……",
+      "牆上的畫突然開口講話……", "一顆星星墜落在我家的陽台……",
+      "手機裡跑出了一隻狐狸……", "我不小心踩到一張通往奇幻世界的地圖……",
+      "早餐的吐司夾著一封信……", "冰箱裡藏著一扇小門……",
+      "今天天空是綠色的……", "我家的狗突然會說人話了……",
+      "電風扇開始對我唱歌……", "我養的植物長出了翅膀……",
+      "昨天的自己來找我聊天……", "我從夢中帶回來一顆會發光的石頭……",
+      "我家牆壁後藏著一個秘密房間……", "上學路上我遇到一個時光旅人……",
+      "我收到一封來自未來的明信片……", "窗戶上出現了神秘圖案……",
+      "我的影子跑去環遊世界了……", "一根鉛筆改變了我的一整天……",
+      "我在抽屜裡找到了一本自動寫字的日記……"
+    ];
+
+    const abstractThemes = [
+      "友情", "恐懼", "希望", "自由", "孤獨", "選擇", "夢想", "信任", "責任", "成長",
+      "勇氣", "改變", "遺憾", "快樂", "堅持", "愛", "嫉妒", "誠實", "冒險", "思念",
+      "現實與幻想", "自由意志", "命運", "寬容", "合作", "依賴", "反抗", "想像", "認同", "自我探索"
+    ];
+
+    function generateStory() {
+      const story = storyPrompts[Math.floor(Math.random() * storyPrompts.length)];
+      const theme = abstractThemes[Math.floor(Math.random() * abstractThemes.length)];
+      document.getElementById("output").innerHTML = `<strong>故事開頭：</strong> ${story}<br><strong>主題概念：</strong> ${theme}`;
+    }
+  </script>
+</body>
+</html>
