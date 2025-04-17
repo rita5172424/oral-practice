@@ -1,182 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>口語表達訓練器</title>
+  <meta charset="UTF-8" />
+  <title>口語表達練習首頁</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: #f1f7f3 url('https://undraw.co/api/illustrations/flat-nature') no-repeat center top;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
+      background-color: #fefcf8;
       color: #333;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
+      text-align: center;
       padding: 2rem;
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     h1 {
       font-size: 2rem;
-      margin-bottom: 1rem;
     }
-    .section-title {
+    .link-list {
+      list-style: none;
+      padding: 0;
+    }
+    .link-list li {
+      margin: 0.75rem 0;
+    }
+    .link-list a {
+      text-decoration: none;
       font-size: 1.25rem;
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
+      color: #1e88e5;
     }
-    .topic-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .topic {
-      padding: 1rem;
-      background-color: #e0f7e9;
-      border-radius: 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .topic:hover {
-      background-color: #c8e6d1;
-    }
-    .tag-line {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 0.25rem;
-    }
-    .random-button {
-      margin: 1.5rem 0;
-      padding: 0.75rem 1.5rem;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .random-questions {
-      margin-top: 1rem;
-      padding-left: 1rem;
-    }
-    .question-card {
-      background-color: #fff;
-      border-left: 4px solid #4CAF50;
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border-radius: 8px;
-    }
-    .stamp-card {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-    .stamp {
-      width: 36px;
-      height: 36px;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #fff3cd;
-      border-radius: 50%;
-      border: 2px solid #ffc107;
+    .stars {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      color: #f59e0b;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🌱 口語表達訓練器</h1>
+  <h1>🌟 口語表達練習 🌟</h1>
 
-    <div class="section-title">練習主題</div>
-    <div class="topic-list" id="topicList"></div>
+  <ul class="link-list">
+    <li><a href="topic1-explanation.html">1️⃣ 解釋詞語</a></li>
+    <li><a href="topic2-topic.html">2️⃣ 說出主題</a></li>
+    <li><a href="topic3-host.html">3️⃣ 假裝主持人</a></li>
+    <li><a href="topic4-story.html">4️⃣ 三句講故事</a></li>
+    <li><a href="topic5-debate.html">5️⃣ 辯論奇葩議題</a></li>
+    <li><a href="topic6-association.html">6️⃣ 隨機物品聯想</a></li>
+    <li><a href="topic7-bizarre.html">7️⃣ 奇異類比聯想</a></li>
+    <li><a href="topic8-ordstory.html">8️⃣ 隨機詞語串故事</a></li>
+  </ul>
 
-    <button class="random-button" onclick="generateRandomQuestions()">🎲 這週隨機出題</button>
-    <div class="random-questions" id="questionArea"></div>
+  <div class="stars" id="starDisplay">🌟 已獲得星星：0 顆</div>
 
-    <div class="section-title">⭐ 我的集點卡</div>
-    <div class="stamp-card" id="stampCard"></div>
-  </div>
-
-  <script>
-    const topics = [
-      { name: "一句話解釋", tags: ["#詞語組織", "#邏輯"] },
-      { name: "三句講故事", tags: ["#創意", "#情節組織"] },
-      { name: "假裝主持人", tags: ["#口條", "#臨場反應"] },
-      { name: "辯論奇葩議題", tags: ["#邏輯", "#表達立場"] },
-      { name: "隨機物品聯想", tags: ["#聯想力", "#創造性思考"] },
-      { name: "奇異類比聯想", tags: ["#幽默感", "#比喻能力"] },
-      { name: "隨機詞語串聯故事", tags: ["#組織", "#想像"] },
-      { name: "誇張推銷大會", tags: ["#說服力", "#詞彙應用"] }
-    ];
-
-    const questionBank = {
-      "一句話解釋": ["友情是……", "壓力是……", "自由是……"],
-      "三句講故事": ["有一天我遺失了一把鑰匙……", "月亮說它不想上班了……"]
-    };
-
-    const stamps = ["⭐", "🐥", "🐰", "🐢", "🐻", "🦊"];
-
-    let progress = parseInt(localStorage.getItem('progress') || '0');
-    let round = parseInt(localStorage.getItem('round') || '0');
-
-    function renderTopics() {
-      const list = document.getElementById("topicList");
-      topics.forEach(t => {
-        const div = document.createElement("div");
-        div.className = "topic";
-        div.innerHTML = `<strong>${t.name}</strong><div class='tag-line'>${t.tags.join(" ")}</div>`;
-        div.onclick = () => alert(`前往「${t.name}」主題頁（尚未建置）`);
-        list.appendChild(div);
-      });
-    }
-
-    function generateRandomQuestions() {
-      const area = document.getElementById("questionArea");
-      area.innerHTML = "";
-      const shuffled = [...topics].sort(() => 0.5 - Math.random()).slice(0, 5);
-      shuffled.forEach(topic => {
-        const questions = questionBank[topic.name] || [];
-        const q = questions[Math.floor(Math.random() * questions.length)] || "（尚未設定題目）";
-        const card = document.createElement("div");
-        card.className = "question-card";
-        card.innerHTML = `<strong>${topic.name}</strong><br>${q} <br><button onclick='markComplete()'>✅ 完成</button>`;
-        area.appendChild(card);
-      });
-    }
-
-    function markComplete() {
-      progress++;
-      if (progress >= 10) {
-        progress = 0;
-        round = (round + 1) % stamps.length;
-      }
-      localStorage.setItem('progress', progress);
-      localStorage.setItem('round', round);
-      renderStamps();
-    }
-
-    function renderStamps() {
-      const card = document.getElementById("stampCard");
-      card.innerHTML = "";
-      for (let i = 0; i < 10; i++) {
-        const span = document.createElement("div");
-        span.className = "stamp";
-        span.textContent = i < progress ? stamps[round] : "";
-        card.appendChild(span);
-      }
-    }
-
-    renderTopics();
-    renderStamps();
-  </script>
+  <script src="stars.js"></script>
 </body>
 </html>
