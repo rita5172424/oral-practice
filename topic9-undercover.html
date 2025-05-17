@@ -59,13 +59,34 @@
                 </ul>
             </aside>
             <section class="card-container">
-                <div class="card" data-index="0"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
-                <div class="card" data-index="1"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
-                <div class="card" data-index="2"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
-                <div class="card" data-index="3"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
-                <div class="card" data-index="4"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
-                <div class="card" data-index="5"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
-                <div class="card" data-index="6"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="0">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
+                <div class="card" data-index="1">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
+                <div class="card" data-index="2">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
+                <div class="card" data-index="3">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
+                <div class="card" data-index="4">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
+                <div class="card" data-index="5">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
+                <div class="card" data-index="6">
+                    <div class="card-back"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"></div>
+                    <div class="card-front"><span></span></div>
+                </div>
             </section>
         </main>
         <footer>
@@ -75,7 +96,7 @@
     </div>
 
     <script>
-        // 遊戲題目資料
+        // 遊戲題目資料 (與之前的相同)
         const topics = {
             "A1": ["雨傘", "雨傘", "雨傘", "雨傘", "雨傘", "雨傘", "拐杖"],
             "A2": ["鑰匙", "鑰匙", "鑰匙", "鑰匙", "鑰匙", "鑰匙", "皮夾"],
@@ -127,6 +148,8 @@
         const shuffleButton = document.getElementById('shuffle-button');
         // 用來儲存目前卡牌的文字內容
         let currentCardTexts = Array(cards.length).fill('');
+        // 用來記錄目前是否正在顯示卡牌內容
+        let isRevealing = Array(cards.length).fill(false);
 
         // 洗牌函數：將選定題目的詞語隨機分配到卡牌中
         function shuffleCards(topic) {
@@ -139,46 +162,64 @@
 
             // 將洗好的詞語分配到每張卡牌中
             cards.forEach((card, index) => {
-                const span = card.querySelector('span');
-                span.textContent = shuffledTopic[index]; // 將對應索引的詞語設定到卡牌的文字內容
+                const frontSpan = card.querySelector('.card-front span');
+                frontSpan.textContent = shuffledTopic[index]; // 將對應索引的詞語設定到卡牌正面文字內容
                 currentCardTexts[index] = shuffledTopic[index]; // 更新目前卡牌的文字內容
-                const img = card.querySelector('img');
-                img.style.display = 'block'; // 確保卡牌背面顯示
-                span.style.display = 'none'; // 隱藏文字內容
+                const back = card.querySelector('.card-back');
+                const front = card.querySelector('.card-front');
+                back.style.display = 'block'; // 確保卡牌背面顯示
+                front.style.display = 'none'; // 隱藏文字內容
+                card.classList.remove('revealed'); // 移除之前可能存在的顯示狀態
+                isRevealing[index] = false; // 重置顯示狀態
             });
         }
+
+        // 處理點擊卡牌事件
+        cards.forEach((card, index) => {
+            card.addEventListener('click', function() {
+                if (isRevealing[index]) {
+                    return; // 如果正在顯示中，則不執行任何動作
+                }
+
+                isRevealing[index] = true; // 標記為正在顯示中
+                const back = this.querySelector('.card-back');
+                const front = this.querySelector('.card-front');
+                const frontSpan = this.querySelector('.card-front span');
+
+                // 動態設定文字大小和行高，使其在色塊中垂直置中
+                frontSpan.style.fontSize = '50pt';
+                frontSpan.style.lineHeight = getComputedStyle(this).height; // 行高等於卡片高度，以實現垂直置中
+
+                this.classList.add('revealed'); // 添加顯示的 class，觸發 CSS 動畫
+                back.style.display = 'none'; // 隱藏卡牌背面
+                front.style.display = 'flex'; // 顯示文字內容，使用 flexbox 使文字可以垂直置中
+                front.style.justifyContent = 'center'; // 水平置中
+                front.style.alignItems = 'center'; // 垂直置中
+                frontSpan.style.writingMode = 'vertical-rl'; // 文字直行顯示
+
+                // 設定 5 秒後恢復卡牌背面
+                setTimeout(() => {
+                    this.classList.remove('revealed'); // 移除顯示的 class，觸發 CSS 回復動畫
+                    back.style.display = 'block';
+                    front.style.display = 'none';
+                    isRevealing[index] = false; // 重置顯示狀態
+                }, 5000);
+            });
+        });
 
         // 處理點擊題目按鈕事件
         topicButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const topic = this.dataset.topic; // 取得被點擊按鈕的題目代號
                 shuffleCards(topic); // 根據選擇的題目洗牌卡牌
-            });
-        });
-
-        // 處理點擊卡牌事件
-        cards.forEach(card => {
-            card.addEventListener('click', function() {
-                const index = parseInt(this.dataset.index); // 取得被點擊卡牌的索引
-                const img = this.querySelector('img');
-                const span = this.querySelector('span');
-
-                img.style.display = 'none'; // 隱藏卡牌背面
-                span.style.display = 'block'; // 顯示文字內容
-
-                // 設定 5 秒後恢復卡牌背面
-                setTimeout(() => {
-                    img.style.display = 'block';
-                    span.style.display = 'none';
-                }, 5000);
+                // 移除之前所有按鈕的 active 類別並為目前按鈕添加
+                topicButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
             });
         });
 
         // 處理點擊重新洗牌按鈕事件
         shuffleButton.addEventListener('click', function() {
-            // 重新洗牌時，需要知道目前選定的題目是什麼
-            // 這裡假設使用者在點擊題目代號後才會開始遊戲
-            // 因此我們需要找到目前被選中的題目按鈕，並重新洗牌
             const activeTopicButton = document.querySelector('.topic-list button.active');
             if (activeTopicButton) {
                 shuffleCards(activeTopicButton.dataset.topic);
@@ -188,19 +229,10 @@
         });
 
         // 初始狀態：載入頁面時，先隨機選擇一個題目並洗牌 (可選)
-        // const initialTopics = Object.keys(topics);
-        // const randomTopic = initialTopics[Math.floor(Math.random() * initialTopics.length)];
-        // shuffleCards(randomTopic);
-
-        // 樣式調整：當題目按鈕被點擊時，增加 active 類別，以便在 CSS 中標示
-        topicButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // 移除之前所有按鈕的 active 類別
-                topicButtons.forEach(btn => btn.classList.remove('active'));
-                // 為目前點擊的按鈕增加 active 類別
-                this.classList.add('active');
-            });
-        });
+        const initialTopics = Object.keys(topics);
+        const randomTopic = initialTopics[Math.floor(Math.random() * initialTopics.length)];
+        shuffleCards(randomTopic);
+        document.querySelector(`.topic-list button[data-topic="${randomTopic}"]`).classList.add('active');
     </script>
 </body>
 </html>
