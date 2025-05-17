@@ -2,14 +2,14 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>我是臥底 - 抽卡頁面</title>
+  <title>我是臥底 - 口語練習</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: linear-gradient(#f0f8ff, #fef9f1);
-      padding: 2rem;
+      background: linear-gradient(to bottom, #f8f8f3, #e0f2f1);
       margin: 0;
+      padding: 2rem;
       text-align: center;
       color: #333;
     }
@@ -17,199 +17,221 @@
     h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
+      color: #2e7d32;
     }
 
-    .topic-selector {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 1rem;
-      gap: 0.5rem;
-    }
-
-    .topic-selector button {
+    .instructions {
+      background-color: #fff9c4;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      line-height: 1.8;
       font-size: 1.2rem;
+    }
+
+    .topic-buttons {
+      margin-bottom: 1.5rem;
+    }
+
+    .topic-buttons button {
+      margin: 0.25rem;
       padding: 0.5rem 1rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 0.5rem;
-      background-color: #aad8d3;
+      border-radius: 8px;
+      background-color: #aed581;
+      color: #fff;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
-    .topic-selector button:hover {
-      background-color: #87c1bb;
+    .topic-buttons button:hover {
+      background-color: #9ccc65;
     }
 
-    .card-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 1rem;
-      justify-items: center;
-      max-width: 800px;
-      margin: auto;
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin-bottom: 2rem;
     }
 
     .card {
-      width: 150px;
-      height: 200px;
-      position: relative;
+      width: 120px;
+      height: 180px;
+      background-image: url('assets/cardback.jpeg.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      transition: transform 0.4s ease;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+      flex-shrink: 0;
     }
 
-    .card img {
-      width: 100%;
-      height: 100%;
-      border-radius: 1rem;
+    .card.glow {
+      box-shadow: 0 0 12px 6px rgba(255, 223, 0, 0.8);
+    }
+
+    .card:hover {
+      transform: scale(1.05);
     }
 
     .card-text {
+      width: 120px;
+      height: 180px;
+      background-color: #fff3e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      border-radius: 12px;
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 50px;
-      writing-mode: vertical-rl;
-      text-align: center;
-      background-color: #fffaf0;
-      border-radius: 1rem;
-      border: 2px solid #aaa;
-      display: none;
-      padding: 1rem;
+      z-index: 2;
     }
 
-    .controls {
-      margin-top: 1.5rem;
+    .card-number {
+      position: absolute;
+      bottom: 6px;
+      right: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
     }
 
-    .controls button {
+    .actions {
+      margin-top: 1rem;
+    }
+
+    .actions button, .actions a {
+      margin: 0.5rem;
+      padding: 0.6rem 1.2rem;
       font-size: 1.2rem;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
       border: none;
-      background-color: #fbc02d;
+      border-radius: 8px;
+      background-color: #4db6ac;
+      color: #fff;
+      text-decoration: none;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
-    .home-link {
-      margin-top: 1.5rem;
-      display: block;
-      font-size: 1rem;
-      color: #1976d2;
+    .actions button:hover, .actions a:hover {
+      background-color: #00897b;
     }
   </style>
 </head>
 <body>
-  <h1>我是臥底 🎭</h1>
+  <h1>我是臥底</h1>
 
-  <!-- 題目代號選擇區 -->
-  <div class="topic-selector" id="topicButtons"></div>
-
-  <!-- 卡片區域 -->
-  <div class="card-container" id="cardContainer"></div>
-
-  <!-- 控制按鈕 -->
-  <div class="controls">
-    <button onclick="shuffleCards()">🔁 重新洗牌</button>
+  <div class="instructions">
+    <strong>遊戲步驟：</strong><br>
+    ✅ 看詞語：拿到你的秘密詞語。<br>
+    ✅ 說一句：輪流說一句話描述你的詞語，別說出詞語本身！<br>
+    ✅ 猜臥底：大家一起猜誰是拿到不同詞語的臥底。<br>
+    ✅ 投票指：同時指出你覺得是臥底的人。<br>
+    ✅ 驗身份：看被指認的人是不是臥底。<br>
+    ✅ 臥底猜：如果沒抓到臥底，臥底可以試著猜大家是什麼詞語。<br>
+    ✅ 分勝負：抓到臥底，大家贏！臥底猜對，臥底贏！
   </div>
 
-  <!-- 回首頁連結 -->
-  <a class="home-link" href="index.html">🏠 回首頁</a>
+  <div class="topic-buttons" id="topicButtons"></div>
+  <div class="cards-container" id="cardsContainer"></div>
+
+  <div class="actions">
+    <button onclick="shuffleCards()">重新洗牌</button>
+    <a href="index.html">回首頁</a>
+  </div>
 
   <script>
-    // 題目資料：每組7張
     const topics = {
-      A1: ['雨傘', '雨傘', '雨傘', '雨傘', '雨傘', '雨傘', '拐杖'],
-      A2: ['鑰匙', '鑰匙', '鑰匙', '鑰匙', '鑰匙', '鑰匙', '皮夾'],
-      A3: ["手機", "手機", "手機", "手機", "手機", "手機", "計算機"],
-      A4: ["眼鏡", "眼鏡", "眼鏡", "眼鏡", "眼鏡", "眼鏡", "帽子"],
-      A5: ["書本", "書本", "書本", "書本", "書本", "書本", "雜誌"],
-      A6: ["枕頭", "枕頭", "枕頭", "枕頭", "枕頭", "枕頭", "棉被"],
-      A7: ["牙刷", "牙刷", "牙刷", "牙刷", "牙刷", "牙刷", "毛巾"],
-      A8: ["肥皂", "肥皂", "肥皂", "肥皂", "肥皂", "肥皂", "洗髮精"],
-      B1: ['蘋果', '蘋果', '蘋果', '蘋果', '蘋果', '蘋果', '香蕉'],
-      C1: ['老師', '老師', '老師', '老師', '老師', '老師', '學生'],
-      C2: ["醫生", "醫生", "醫生", "醫生", "醫生", "醫生", "護士"],
-      C3: ["警察", "警察", "警察", "警察", "警察", "警察", "小偷"],
-      C4: ["廚師", "廚師", "廚師", "廚師", "廚師", "廚師", "服務生"],
-      D1: ['跑步', '跑步', '跑步', '跑步', '跑步', '跑步', '跳舞'],
-      D2: ["唱歌", "唱歌", "唱歌", "唱歌", "唱歌", "唱歌", "畫畫"],
-      D3: ["閱讀", "閱讀", "閱讀", "閱讀", "閱讀", "閱讀", "書寫"],
-      D4: ["睡覺", "睡覺", "睡覺", "睡覺", "睡覺", "睡覺", "清醒"],
-      D5: ["思考", "思考", "思考", "思考", "思考", "思考", "發呆"],
-      E1: ['會議室', '會議室', '會議室', '會議室', '會議室', '會議室', '圖書館']
-      E2: ["醫院", "醫院", "醫院", "醫院", "醫院", "醫院", "警察局"],
-      E3: ["餐廳", "餐廳", "餐廳", "餐廳", "餐廳", "餐廳", "咖啡廳"],
-      E4: ["學校", "學校", "學校", "學校", "學校", "學校", "辦公室"],
-      // 可自行補充更多
+      A1: ["雨傘", "雨傘", "雨傘", "雨傘", "雨傘", "雨傘", "拐杖"],
+      A2: ["鑰匙", "鑰匙", "鑰匙", "鑰匙", "鑰匙", "鑰匙", "皮夾"],
+      B1: ["蘋果", "蘋果", "蘋果", "蘋果", "蘋果", "蘋果", "香蕉"],
+      C1: ["老師", "老師", "老師", "老師", "老師", "老師", "學生"]
     };
 
-    const topicButtonsDiv = document.getElementById('topicButtons');
-    const cardContainer = document.getElementById('cardContainer');
-    let currentSet = [];
-    let currentKey = 'A1';
+    const topicButtonsContainer = document.getElementById('topicButtons');
+    const cardsContainer = document.getElementById('cardsContainer');
 
-    // 初始化題目按鈕
-    for (let key in topics) {
-      const btn = document.createElement('button');
-      btn.textContent = key;
-      btn.onclick = () => {
-        currentKey = key;
-        shuffleCards();
-      };
-      topicButtonsDiv.appendChild(btn);
-    }
+    let currentWords = [];
 
-    // 洗牌函數
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    // 渲染卡片
-    function renderCards() {
-      cardContainer.innerHTML = '';
-      currentSet.forEach((text, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        const img = document.createElement('img');
-        img.src = 'assets/cardback.jpeg.jpg';
-
-        const cardText = document.createElement('div');
-        cardText.className = 'card-text';
-        cardText.textContent = text;
-
-        card.appendChild(img);
-        card.appendChild(cardText);
-
-        card.onclick = () => {
-          img.style.display = 'none';
-          cardText.style.display = 'flex';
-          card.style.transform = 'scale(1.05)';
-          setTimeout(() => {
-            cardText.style.display = 'none';
-            img.style.display = 'block';
-            card.style.transform = 'scale(1)';
-          }, 5000);
+    function createTopicButtons() {
+      for (let key in topics) {
+        const btn = document.createElement('button');
+        btn.textContent = key;
+        btn.onclick = () => {
+          currentWords = [...topics[key]];
+          shuffleArray(currentWords);
+          renderCards();
         };
-
-        cardContainer.appendChild(card);
-      });
+        topicButtonsContainer.appendChild(btn);
+      }
     }
 
-    // 初始載入
     function shuffleCards() {
-      currentSet = shuffle([...topics[currentKey]]);
+      shuffleArray(currentWords);
       renderCards();
     }
 
-    shuffleCards();
+    function renderCards() {
+      cardsContainer.innerHTML = "";
+      currentWords.forEach((word, index) => {
+        const cardWrapper = document.createElement("div");
+        cardWrapper.className = "card glow";
+        cardWrapper.dataset.clicked = "false";
+
+        const cardText = document.createElement("div");
+        cardText.className = "card-text";
+        cardText.textContent = word;
+        cardText.style.display = "none";
+
+        const numberLabel = document.createElement("div");
+        numberLabel.className = "card-number";
+        numberLabel.textContent = index + 1;
+
+        cardWrapper.onclick = () => {
+          cardText.style.display = "flex";
+
+          if (cardWrapper.dataset.clicked === "false") {
+            cardWrapper.classList.remove("glow");
+            cardWrapper.dataset.clicked = "true";
+          }
+
+          setTimeout(() => {
+            cardText.style.display = "none";
+          }, 5000);
+        };
+
+        cardWrapper.appendChild(cardText);
+        cardWrapper.appendChild(numberLabel);
+        cardsContainer.appendChild(cardWrapper);
+      });
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // 初始化
+    createTopicButtons();
+    currentWords = [...topics["A1"]];
+    shuffleArray(currentWords);
+    renderCards();
   </script>
 </body>
 </html>
