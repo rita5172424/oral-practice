@@ -1,0 +1,51 @@
+body {
+    font-family: 'Arial', sans-serif; /* 使用常見的 Arial 字體，清晰易讀 */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6; /* 淺綠色背景，帶來自然舒適感 */
+    color: #333; /* 深灰色文字，提高可讀性 */
+    display: flex;
+    justify-content: center; /* 水平置中內容 */
+    align-items: center; /* 垂直置中內容 */
+    min-height: 100vh; /* 確保內容至少佔滿整個視窗高度 */
+}
+
+.container {
+    background-color: #fff; /* 白色容器，讓內容更突出 */
+    border-radius: 8px; /* 圓角邊框，增加柔和感 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* হালকা ছায়া, সামান্য ডিজাইন যোগ করে */
+    padding: 30px;
+    width: 90%; /* 在較小的螢幕上也能有較好的顯示 */
+    max-width: 960px; /* 設定最大寬度，避免在過寬的螢幕上過度延伸 */
+    display: flex;
+    flex-direction: column; /* 垂直排列內容 */
+    align-items: center; /* 容器內的元素水平置中 */
+}
+
+header {
+    text-align: center; /* 標題置中 */
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em; /* 加大標題字體 */
+    color: #2e8b57; /* 深綠色標題，與背景形成對比 */
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 1.1em; /* 說明文字大小 */
+    color: #777;
+}
+
+main {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.topic-list {
+    flex: 0 0 150px; /* 固定寬度，放置題目列表 */
+    margin-right: 20px;
+    padding: 15px;
+    border-radius
