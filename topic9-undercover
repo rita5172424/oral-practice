@@ -1,1 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我是臥底</title>
+    <link rel="stylesheet" href="assets/style_undercover.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>我是臥底</h1>
+            <p>點選左方的題目代號，卡牌內容將會更新。點擊卡牌查看你的詞語！</p>
+        </header>
+        <main>
+            <aside class="topic-list">
+                <h2>題目</h2>
+                <ul>
+                    <li><button data-topic="A1">A1</button></li>
+                    <li><button data-topic="A2">A2</button></li>
+                    <li><button data-topic="A3">A3</button></li>
+                    <li><button data-topic="A4">A4</button></li>
+                    <li><button data-topic="A5">A5</button></li>
+                    <li><button data-topic="A6">A6</button></li>
+                    <li><button data-topic="A7">A7</button></li>
+                    <li><button data-topic="A8">A8</button></li>
+                    <li><button data-topic="B1">B1</button></li>
+                    <li><button data-topic="B2">B2</button></li>
+                    <li><button data-topic="B3">B3</button></li>
+                    <li><button data-topic="B4">B4</button></li>
+                    <li><button data-topic="B5">B5</button></li>
+                    <li><button data-topic="B6">B6</button></li>
+                    <li><button data-topic="B7">B7</button></li>
+                    <li><button data-topic="B8">B8</button></li>
+                    <li><button data-topic="C1">C1</button></li>
+                    <li><button data-topic="C2">C2</button></li>
+                    <li><button data-topic="C3">C3</button></li>
+                    <li><button data-topic="C4">C4</button></li>
+                    <li><button data-topic="C5">C5</button></li>
+                    <li><button data-topic="C6">C6</button></li>
+                    <li><button data-topic="C7">C7</button></li>
+                    <li><button data-topic="C8">C8</button></li>
+                    <li><button data-topic="D1">D1</button></li>
+                    <li><button data-topic="D2">D2</button></li>
+                    <li><button data-topic="D3">D3</button></li>
+                    <li><button data-topic="D4">D4</button></li>
+                    <li><button data-topic="D5">D5</button></li>
+                    <li><button data-topic="D6">D6</button></li>
+                    <li><button data-topic="D7">D7</button></li>
+                    <li><button data-topic="D8">D8</button></li>
+                    <li><button data-topic="E1">E1</button></li>
+                    <li><button data-topic="E2">E2</button></li>
+                    <li><button data-topic="E3">E3</button></li>
+                    <li><button data-topic="E4">E4</button></li>
+                    <li><button data-topic="E5">E5</button></li>
+                    <li><button data-topic="E6">E6</button></li>
+                    <li><button data-topic="E7">E7</button></li>
+                    <li><button data-topic="E8">E8</button></li>
+                </ul>
+            </aside>
+            <section class="card-container">
+                <div class="card" data-index="0"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="1"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="2"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="3"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="4"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="5"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+                <div class="card" data-index="6"><img src="assets/cardback.jpeg.jpg" alt="卡牌背面"><span></span></div>
+            </section>
+        </main>
+        <footer>
+            <button id="shuffle-button">重新洗牌</button>
+            <a href="index.html">回首頁</a>
+        </footer>
+    </div>
 
+    <script>
+        // 遊戲題目資料
+        const topics = {
+            "A1": ["雨傘", "雨傘", "雨傘", "雨傘", "雨傘", "雨傘", "拐杖"],
+            "A2": ["鑰匙", "鑰匙", "鑰匙", "鑰匙", "鑰匙", "鑰匙", "皮夾"],
+            "A3": ["手機", "手機", "手機", "手機", "手機", "手機", "計算機"],
+            "A4": ["眼鏡", "眼鏡", "眼鏡", "眼鏡", "眼鏡", "眼鏡", "帽子"],
+            "A5": ["書本", "書本", "書本", "書本", "書本", "書本", "雜誌"],
+            "A6": ["枕頭", "枕頭", "枕頭", "枕頭", "枕頭", "枕頭", "棉被"],
+            "A7": ["牙刷", "牙刷", "牙刷", "牙刷", "牙刷", "牙刷", "毛巾"],
+            "A8": ["肥皂", "肥皂", "肥皂", "肥皂", "肥皂", "肥皂", "洗髮精"],
+            "B1": ["蘋果", "蘋果", "蘋果", "蘋果", "蘋果", "蘋果", "香蕉"],
+            "B2": ["麵包", "麵包", "麵包", "麵包", "麵包", "麵包", "蛋糕"],
+            "B3": ["咖啡", "咖啡", "咖啡", "咖啡", "咖啡", "咖啡", "牛奶"],
+            "B4": ["筷子", "筷子", "筷子", "筷子", "筷子", "筷子", "湯匙"],
+            "B5": ["披薩", "披薩", "披薩", "披薩", "披薩", "披薩", "壽司"],
+            "B6": ["冰淇淋", "冰淇淋", "冰淇淋", "冰淇淋", "冰淇淋", "冰淇淋", "巧克力"],
+            "B7": ["茶葉蛋", "茶葉蛋", "茶葉蛋", "茶葉蛋", "茶葉蛋", "茶葉蛋", "包子"],
+            "B8": ["滷肉飯", "滷肉飯", "滷肉飯", "滷肉飯", "滷肉飯", "滷肉飯", "珍珠奶茶"],
+            "C1": ["老師", "老師", "老師", "老師", "老師", "老師", "學生"],
+            "C2": ["醫生", "醫生", "醫生", "醫生", "醫生", "醫生", "護士"],
+            "C3": ["警察", "警察", "警察", "警察", "警察", "警察", "小偷"],
+            "C4": ["廚師", "廚師", "廚師", "廚師", "廚師", "廚師", "服務生"],
+            "C5": ["工程師", "工程師", "工程師", "工程師", "工程師", "工程師", "設計師"],
+            "C6": ["魔術師", "魔術師", "魔術師", "魔術師", "魔術師", "魔術師", "觀眾"],
+            "C7": ["運動員", "運動員", "運動員", "運動員", "運動員", "運動員", "教練"],
+            "C8": ["歌手", "歌手", "歌手", "歌手", "歌手", "歌手", "聽眾"],
+            "D1": ["跑步", "跑步", "跑步", "跑步", "跑步", "跑步", "跳舞"],
+            "D2": ["唱歌", "唱歌", "唱歌", "唱歌", "唱歌", "唱歌", "畫畫"],
+            "D3": ["閱讀", "閱讀", "閱讀", "閱讀", "閱讀", "閱讀", "書寫"],
+            "D4": ["睡覺", "睡覺", "睡覺", "睡覺", "睡覺", "睡覺", "清醒"],
+            "D5": ["思考", "思考", "思考", "思考", "思考", "思考", "發呆"],
+            "D6": ["微笑", "微笑", "微笑", "微笑", "微笑", "微笑", "哭泣"],
+            "D7": ["擁抱", "擁抱", "擁抱", "擁抱", "擁抱", "擁抱", "握手"],
+            "D8": ["揮手", "揮手", "揮手", "揮手", "揮手", "揮手", "指路"],
+            "E1": ["公園", "公園", "公園", "公園", "公園", "公園", "圖書館"],
+            "E2": ["醫院", "醫院", "醫院", "醫院", "醫院", "醫院", "警察局"],
+            "E3": ["餐廳", "餐廳", "餐廳", "餐廳", "餐廳", "餐廳", "咖啡廳"],
+            "E4": ["學校", "學校", "學校", "學校", "學校", "學校", "辦公室"],
+            "E5": ["電影院", "電影院", "電影院", "電影院", "電影院", "電影院", "遊樂園"],
+            "E6": ["百貨公司", "百貨公司", "百貨公司", "百貨公司", "百貨公司", "百貨公司", "超市"],
+            "E7": ["機場", "機場", "機場", "機場", "機場", "機場", "火車站"],
+            "E8": ["家裡", "家裡", "家裡", "家裡", "家裡", "家裡", "戶外"]
+        };
+
+        // 取得卡牌元素
+        const cards = document.querySelectorAll('.card');
+        // 取得題目列表按鈕元素
+        const topicButtons = document.querySelectorAll('.topic-list button');
+        // 取得重新洗牌按鈕元素
+        const shuffleButton = document.getElementById('shuffle-button');
+        // 用來儲存目前卡牌的文字內容
+        let currentCardTexts = Array(cards.length).fill('');
+
+        // 洗牌函數：將選定題目的詞語隨機分配到卡牌中
+        function shuffleCards(topic) {
+            const selectedTopic = topics[topic]; // 根據選擇的題目代號，取得對應的詞語陣列
+            if (!selectedTopic) {
+                console.error('找不到對應的題目：', topic);
+                return;
+            }
+            const shuffledTopic = [...selectedTopic].sort(() => Math.random() - 0.5); // 複製並隨機排序詞語陣列
+
+            // 將洗好的詞語分配到每張卡牌中
+            cards.forEach((card, index) => {
+                const span = card.querySelector('span');
+                span.textContent = shuffledTopic[index]; // 將對應索引的詞語設定到卡牌的文字內容
+                currentCardTexts[index] = shuffledTopic[index]; // 更新目前卡牌的文字內容
+                const img = card.querySelector('img');
+                img.style.display = 'block'; // 確保卡牌背面顯示
+                span.style.display = 'none'; // 隱藏文字內容
+            });
+        }
+
+        // 處理點擊題目按鈕事件
+        topicButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const topic = this.dataset.topic; // 取得被點擊按鈕的題目代號
+                shuffleCards(topic); // 根據選擇的題目洗牌卡牌
+            });
+        });
+
+        // 處理點擊卡牌事件
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index); // 取得被點擊卡牌的索引
+                const img = this.querySelector('img');
+                const span = this.querySelector('span');
+
+                img.style.display = 'none'; // 隱藏卡牌背面
+                span.style.display = 'block'; // 顯示文字內容
+
+                // 設定 5 秒後恢復卡牌背面
+                setTimeout(() => {
+                    img.style.display = 'block';
+                    span.style.display = 'none';
+                }, 5000);
+            });
+        });
+
+        // 處理點擊重新洗牌按鈕事件
+        shuffleButton.addEventListener('click', function() {
+            // 重新洗牌時，需要知道目前選定的題目是什麼
+            // 這裡假設使用者在點擊題目代號後才會開始遊戲
+            // 因此我們需要找到目前被選中的題目按鈕，並重新洗牌
+            const activeTopicButton = document.querySelector('.topic-list button.active');
+            if (activeTopicButton) {
+                shuffleCards(activeTopicButton.dataset.topic);
+            } else {
+                alert('請先選擇一個題目代號！');
+            }
+        });
+
+        // 初始狀態：載入頁面時，先隨機選擇一個題目並洗牌 (可選)
+        // const initialTopics = Object.keys(topics);
+        // const randomTopic = initialTopics[Math.floor(Math.random() * initialTopics.length)];
+        // shuffleCards(randomTopic);
+
+        // 樣式調整：當題目按鈕被點擊時，增加 active 類別，以便在 CSS 中標示
+        topicButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除之前所有按鈕的 active 類別
+                topicButtons.forEach(btn => btn.classList.remove('active'));
+                // 為目前點擊的按鈕增加 active 類別
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
